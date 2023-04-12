@@ -10,13 +10,13 @@ while gets
   end
   unless File.exist?(dst_dir) 
     print <<-EOS
-echo #{dst_dir}
+echo -e #{dst_dir}\\\\n
 py3dtiles convert --srs_in 3857 --srs_out 4978 --jobs 1 --overwrite --out #{dst_dir} #{fn}
     EOS
   end
 end
 
 print <<-EOS
-echo merge
+echo -e merge\\\\n
 py3dtiles merge tileset 
 EOS
