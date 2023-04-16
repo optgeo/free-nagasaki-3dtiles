@@ -6,17 +6,17 @@ while gets
   dirs.push dst_dir
 
   unless File.exist?(fn)
-    print "ipfs get -o #{fn} #{cid}\n"
+    print "ipfs get --progress -o #{fn} #{cid}\n"
   end
   unless File.exist?(dst_dir) 
     print <<-EOS
-echo -e #{dst_dir}\\\\n
+echo -e #{dst_dir}
 py3dtiles convert --srs_in 3857 --srs_out 4978 --jobs 1 --overwrite --out #{dst_dir} #{fn}
     EOS
   end
 end
 
 print <<-EOS
-echo -e merge\\\\n
+echo -e merge
 py3dtiles merge tileset 
 EOS
