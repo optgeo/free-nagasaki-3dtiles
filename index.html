@@ -52,7 +52,7 @@ viewer.camera.moveEnd.addEventListener(() => {
   location.hash = Cesium.Hash.encode(viewer)
 })
 
-const credit = new Cesium.Credit('Virtual Shizuoka and/or 東京都デジタルツイン実現プロジェクト')
+const credit = new Cesium.Credit('Open Nagasaki, Virtual Shizuoka, 東京都デジタルツイン実現プロジェクト')
 viewer.scene.frameState.creditDisplay.addDefaultCredit(credit)
 
 if (Cesium.Hash.decode(location.hash) == null) {
