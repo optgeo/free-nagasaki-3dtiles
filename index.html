@@ -19,33 +19,30 @@ body { padding: 0; margin: 0; overflow: hidden; height: 100%; }
 <script>
 Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5N2UyMjcwOS00MDY1LTQxYjEtYjZjMy00YTU0ZTg5MmViYWQiLCJpZCI6ODAzMDYsImlhdCI6MTY0Mjc0ODI2MX0.dkwAL1CcljUV7NA7fDbhXXnmyZQU_c-G5zRx8PtEcxE"
 const viewer = new Cesium.Viewer("cesiumContainer", {
-  //terrainProvider: new Cesium.CesiumTerrainProvider({
-  //  url: Cesium.IonResource.fromAssetId(770371)
-  //}),
   animation: false,
   homeButton: false,
   navigationHelpButton: false,
   sceneModePicker: false,
   timeline: false
 })
-//const imageProvider = new Cesium.UrlTemplateImageryProvider({ 
-//  url: 'https://gic-plateau.s3.ap-northeast-1.amazonaws.com/2020/ortho/tiles/{z}/{x}/{y}.png', maximumLevel : 19
-//})
-//const current_image = viewer.scene.imageryLayers.addImageryProvider(imageProvider)
 viewer.clock.currentTime = Cesium.JulianDate.fromIso8601("2023-03-21T12:00")
 viewer.scene.globe.depthTestAgainstTerrain = true
 
 const searchParams = new URLSearchParams(window.location.search)
-let url = searchParams.get('tileset') || 'https://d21pj9gigeop84.cloudfront.net/data/point-cloud/lp-2022/22302_kawazu-cho/tileset.json'
+let url = searchParams.get('tileset') || 'https://smb.optgeo.org/ipfs/QmX4HYLsV62MkrABJEN18DNoTps1ehQjq8LZUupgjnqqYc/tileset.json'
 
 const tileset = new Cesium.Cesium3DTileset({
   url: url,
-  //enableDebugWireframe: true,
+  loadSiblings: true,
+  backFaceCulling: false,
+  cullWithChildrenBounds: true,
+  dynamicScreenSpaceError: true,
+  dynamicScreenSpaceErrorDensity: 0.5,
+  dynamicScreenSpaceErrorFactor: 32.0,
+  dynamicScreenSpaceErrorHeightFalloff: 0,
+  maximumScreenSpaceError: 32
 })
-tileset.maximumScreenSpaceError = 16
 tileset.style = new Cesium.Cesium3DTileStyle({pointSize: 3});
-tileset.pointCloudShading.attenuation = false
-tileset.pointCloudShading.geometricErrorScale = 1
 viewer.scene.primitives.add(tileset)
 
 viewer.camera.moveEnd.addEventListener(() => {
